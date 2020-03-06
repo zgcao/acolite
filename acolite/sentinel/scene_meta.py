@@ -13,7 +13,7 @@ def scene_meta(metafile):
     from xml.dom import minidom
         
     from acolite.shared import distance_se
-    from numpy import linspace
+    from numpy import linspace, ceil
 
     try: 
         xmldoc = minidom.parse(metafile)
@@ -72,7 +72,7 @@ def scene_meta(metafile):
         if len(tag) > 0:
             step = float(tag[0].getElementsByTagName('STEP')[0].firstChild.nodeValue)
             rsr = [float(rs) for rs in tag[0].getElementsByTagName('VALUES')[0].firstChild.nodeValue.split(' ')]
-            wave = linspace(banddata['Wavelength'][band]['MIN'],banddata['Wavelength'][band]['MAX'], ((banddata['Wavelength'][band]['MAX']-banddata['Wavelength'][band]['MIN'])/step)+1)                                                                                                                                                            
+            wave = linspace(banddata['Wavelength'][band]['MIN'],banddata['Wavelength'][band]['MAX'], int(ceil((banddata['Wavelength'][band]['MAX']-banddata['Wavelength'][band]['MIN'])/step)+1))                                                                                                                                                            
         banddata['RSR'][band] = {'response':rsr, 'wave':wave}
     #print(banddata['Wavelength'])
 
